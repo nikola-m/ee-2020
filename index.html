@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
+</style>
+    </head>
+    <body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+           <a class="navbar-brand" href="#">Kalkulator fizičkih karakteristika toplotnog omotača</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Tip termičkog omotača
+    <span class="caret"></span>
+  </button>
+  <ul id="tipOmotaca" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#" id="tipOmotaca-1" data-toggle="modal">Spoljašnji zid</a></li>
+    <li><a href="#" id="tipOmotaca-2">Ravan krov</a></li>
+    <li><a href="#" id="tipOmotaca-3">Međuspratna konstrukcija</a></li>
+    <li><a href="#" id="tipOmotaca-4">Kosi krov</a></li>
+  </ul>
+  <label id="ventilisanost" class="checkbox-inline"><input type="checkbox" value="">Ventilisan</label>
+</div>
+
+<p id="tipOmotacaSelected"></p>
+
+<div class="row">
+    <div class="form-group">
+        <label for="title" title="Spoljašnja temperatura" class="col-md-3 control-label">Spoljna temperatura[&deg;C]:</label>
+        <div class="col-md-1">
+        <input type="text" title="Spoljašnja temperatura" id="tempext" required class="form-control" />
+        </div> 
+    </div>
+</div>
+<div class="row">    
+    <div class="form-group">
+        <label for="title" title="Unutrašnja temperatura" class="col-md-3 control-label">Unutrašnja temperatura[&deg;C]:</label>
+        <div class="col-md-1">
+        <input type="text" title="Unutrašnja temperatura" id="tempint" required class="form-control" />
+        </div> 
+    </div>
+</div>
+
+<!-- Tabela sa karakteristikama slojeva -->
+<div id="slojList"></div>
+
+<div class="row">
+	<div class="pull-left">
+        <span id="izracunata-U-vrednost"></span>
+    </div>
+    <div class="pull-right">
+        <button id="dodajSlojButton" class="btn btn-success">Dodaj sloj</button>
+    </div>
+</div>
+
+        
+<div id="slojDetail">
+    <div class="form-group">
+        <label for="latex-output">Latex izveštaj:</label>
+        <textarea class="form-control" rows="10" id="latex-output"></textarea>
+    </div>
+</div>
+
+<div id="chart" class="span4"></div>
+<div id="chart2" class="span4"></div>
+
+		
+<div id="slojForm">
+			<h2>Dodaj sloj</h2>
+			<form role="form" class="form-horizontal" name="slojInputForm">
+			<input type="hidden" id="key">
+                <div class="tree">
+                <ul>
+                    <li><span class="btn btn-warning"><i class="glyphicon glyphicon-plus-sign"></i> Zidovi</span>
+                 <ul>
+                <li>
+                    <div onclick="postaviSloj( 1800.0,  920.0, 0.760,     12.0,'Puna opeka (šupljikavost 0 do 15%), ρ=1800 [kg/m&#179]');return false"><span>Puna opeka (šupljikavost 0 do 15%), ρ=1800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  920.0, 0.640,      9.0,'Puna opeka (šupljikavost 0 do 15%), ρ=1600 [kg/m&#179]');return false"><span>Puna opeka (šupljikavost 0 do 15%), ρ=1600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  920.0, 0.580,      7.0,'Puna opeka (šupljikavost 0 do 15%), ρ=1400 [kg/m&#179]');return false"><span>Puna opeka (šupljikavost 0 do 15%), ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  920.0, 0.470,      5.0,'Puna opeka (šupljikavost 0 do 15%), ρ=1200 [kg/m&#179]');return false"><span>Puna opeka (šupljikavost 0 do 15%), ρ=1200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  920.0, 0.610,      6.0,'Šuplji blokovi i šuplja opeka (gustina zajedno sa otvorima), ρ=1400 [kg/m&#179]');return false"><span>Šuplji blokovi i šuplja opeka (gustina zajedno sa otvorima), ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  920.0, 0.520,      4.0,'Šuplji blokovi i šuplja opeka (gustina zajedno sa otvorima), ρ=1200 [kg/m&#179]');return false"><span>Šuplji blokovi i šuplja opeka (gustina zajedno sa otvorima), ρ=1200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  800.0,  920.0, 0.330,      2.5,'Porozna opeka');return false"><span>Porozna opeka</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0,  880.0, 1.050,     35.0,'Klinker opeka, puna klinker opeka, šuplja, ρ=1900 [kg/m&#179]');return false"><span>Klinker opeka, puna klinker opeka, šuplja, ρ=1900 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1700.0,  880.0, 0.790,     30.0,'Klinker opeka, puna klinker opeka, šuplja, ρ=1700 [kg/m&#179]');return false"><span>Klinker opeka, puna klinker opeka, šuplja, ρ=1700 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1500.0,  920.0, 0.580,      5.0,'Blokovi od elektrofiltrofilterskog pepela, ρ=1500 [kg/m&#179]');return false"><span>Blokovi od elektrofiltrofilterskog pepela, ρ=1500 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1300.0,  920.0, 0.470,      4.0,'Blokovi od elektrofiltrofilterskog pepela, ρ=1500 [kg/m&#179]');return false"><span>Blokovi od elektrofiltrofilterskog pepela, ρ=1500 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2000.0,  920.0, 1.100,     20.0,'Silikatna puna opeka, ρ=2000 [kg/m&#179]');return false"><span>Silikatna puna opeka, ρ=2000 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1800.0,  920.0, 0.990,     16.0,'Silikatna puna opeka, ρ=1800 [kg/m&#179]');return false"><span>Silikatna puna opeka, ρ=1800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  920.0, 0.790,     13.0,'Silikatna puna opeka, ρ=1600 [kg/m&#179]');return false"><span>Silikatna puna opeka, ρ=1600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  920.0, 0.700,      7.0,'Silikatna puna opeka (gustina zajedno sa otvorima), ρ=1400 [kg/m&#179]');return false"><span>Silikatna puna opeka (gustina zajedno sa otvorima), ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  920.0, 0.560,      4.0,'Silikatna puna opeka (gustina zajedno sa otvorima), ρ=1200 [kg/m&#179]');return false"><span>Silikatna puna opeka (gustina zajedno sa otvorima), ρ=1200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  920.0, 0.520,      4.0,'Porolit');return false"><span>Porolit</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  920.0, 0.640,      4.0,'Termo šljakoblok (gustina zajedno sa otvorima), ρ=1600 [kg/m&#179]');return false"><span>Termo šljakoblok (gustina zajedno sa otvorima), ρ=1600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  920.0, 0.580,      4.0,'Termo šljakoblok (gustina zajedno sa otvorima), ρ=1400 [kg/m&#179]');return false"><span>Termo šljakoblok (gustina zajedno sa otvorima), ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  920.0, 0.520,      4.0,'Termo šljakoblok (gustina zajedno sa otvorima), ρ=1200 [kg/m&#179]');return false"><span>Termo šljakoblok (gustina zajedno sa otvorima), ρ=1200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  440.0,  860.0, 0.130,      5.0,'Blokovi od porobetona, ρ=440 [kg/m&#179]');return false"><span>Blokovi od porobetona, ρ=440 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  460.0,  860.0, 0.140,      5.0,'Blokovi od porobetona, ρ=460 [kg/m&#179]');return false"><span>Blokovi od porobetona, ρ=460 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  500.0,  860.0, 0.160,      5.0,'Blokovi od porobetona, ρ=500 [kg/m&#179]');return false"><span>Blokovi od porobetona, ρ=500 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  650.0,  860.0, 0.180,      5.0,'Blokovi od porobetona, ρ=650 [kg/m&#179]');return false"><span>Blokovi od porobetona, ρ=650 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  800.0, 1050.0, 0.350,      7.0,'Blokovi od gas betona, ρ=800 [kg/m&#179]');return false"><span>Blokovi od gas betona, ρ=800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  600.0, 1050.0, 0.270,      5.0,'Blokovi od gas betona, ρ=600 [kg/m&#179]');return false"><span>Blokovi od gas betona, ρ=600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0,  840.0, 0.470,      4.0,'Puni blokovi od lakog betona, ρ=1000 [kg/m&#179]');return false"><span>Puni blokovi od lakog betona, ρ=1000 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  840.0, 0.520,      5.0,'Puni blokovi od lakog betona, ρ=1200 [kg/m&#179]');return false"><span>Puni blokovi od lakog betona, ρ=1200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  840.0, 0.640,      7.0,'Puni blokovi od lakog betona, ρ=1400 [kg/m&#179]');return false"><span>Puni blokovi od lakog betona, ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  840.0, 0.800,      9.0,'Puni blokovi od lakog betona, ρ=1600 [kg/m&#179]');return false"><span>Puni blokovi od lakog betona, ρ=1600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0, 1050.0, 0.440,      2.0,'Betonski blokovi sa otvorima u dva reda od lakog betona ( gustina bez otvora), ρ=1000 [kg/m&#179]');return false"><span>Betonski blokovi sa otvorima u dva reda od lakog betona ( gustina bez otvora), ρ=1000 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0, 1050.0, 0.490,      3.0,'Betonski blokovi sa otvorima u dva reda od lakog betona ( gustina bez otvora), ρ=1200 [kg/m&#179]');return false"><span>Betonski blokovi sa otvorima u dva reda od lakog betona ( gustina bez otvora), ρ=1200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0, 1050.0, 0.560,      4.0,'Betonski blokovi sa otvorima u dva reda od lakog betona ( gustina bez otvora), ρ=1400 [kg/m&#179]');return false"><span>Betonski blokovi sa otvorima u dva reda od lakog betona ( gustina bez otvora), ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0, 1050.0, 0.490,      5.0,'Betonski blokovi sa otvorima u tri reda od lakog betona ( gustina bez otvora), ρ=1400 [kg/m&#179]');return false"><span>Betonski blokovi sa otvorima u tri reda od lakog betona ( gustina bez otvora), ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0, 1050.0, 0.560,      6.0,'Betonski blokovi sa otvorima u tri reda od lakog betona ( gustina bez otvora), ρ=1600 [kg/m&#179]');return false"><span>Betonski blokovi sa otvorima u tri reda od lakog betona ( gustina bez otvora), ρ=1600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2000.0,  920.0, 1.160,     22.0,'Zid od prirodnog kamena');return false"><span>Zid od prirodnog kamena</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  960.0, 0.740,     10.0,'Betonski šuplji blokovi sa otvorima u tri reda (gustina zajedno sa otvorima)');return false"><span>Betonski šuplji blokovi sa otvorima u tri reda (gustina zajedno sa otvorima)</span></div>
+                </li>
+                </ul> 
+                </ul>
+               <ul>
+                    <li><span class="btn btn-warning"><i class="glyphicon glyphicon-plus-sign"></i> Malteri</span>
+                <ul>
+                <li>
+                    <div onclick="postaviSloj( 1600.0, 1050.0, 0.810,     10.0,'Krečni malter');return false"><span>Krečni malter</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1700.0, 1050.0, 0.850,     15.0,'Produžni krečni malter,ρ=1700 [kg/m&#179]');return false"><span>Produžni krečni malter,ρ=1700 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1800.0, 1050.0, 0.870,     20.0,'Produžni krečni malter,ρ=1800 [kg/m&#179]');return false"><span>Produžni krečni malter,ρ=1800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0, 1050.0, 0.990,     25.0,'Produžni krečni malter,ρ=1900 [kg/m&#179]');return false"><span>Produžni krečni malter,ρ=1900 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2100.0, 1050.0, 1.400,     30.0,'Cementirani malter');return false"><span>Cementirani malter</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2200.0, 1050.0, 1.400,     30.0,'Cementni estrih');return false"><span>Cementni estrih</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1850.0, 1050.0, 0.700,     15.0,'Pigmentni fasadni malter');return false"><span>Pigmentni fasadni malter</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0, 1050.0, 0.700,     30.0,'Cementni malter + lateks (sintetički dodaci)');return false"><span>Cementni malter + lateks (sintetički dodaci)</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1500.0,  920.0, 0.700,      9.0,'Gipsani i krečni gipsani malter');return false"><span>Gipsani i krečni gipsani malter</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0,  920.0, 0.470,      4.0,'Laki gipsani malter');return false"><span>Laki gipsani malter</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  500.0, 1050.0, 0.130,      4.0,'Perlit malter');return false"><span>Perlit malter</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  600.0,  920.0, 0.190,      6.0,'Toplotnoizolacioni malter');return false"><span>Toplotnoizolacioni malter</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0,  920.0, 0.470,      3.0,'Gipsani malter na trsci');return false"><span>Gipsani malter na trsci</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  920.0, 0.580,      4.0,'Gipsani malter na rabic mreži');return false"><span>Gipsani malter na rabic mreži</span></div>
+                </li>
+                    </ul> 
+                </ul>
+               <ul>
+                    <li><span class="btn btn-warning"><i class="glyphicon glyphicon-plus-sign"></i> Prirodni kamen i zemlja</span>
+                <ul>
+
+                <li>
+                    <div onclick="postaviSloj( 2600.0,  920.0, 3.500,     65.0,'Granit, kristalasti škriljac, ρ=2600 [kg/m&#179]');return false"><span>Granit, kristalasti škriljac, ρ=2600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2700.0,  920.0, 3.500,     65.0,'Granit, kristalasti škriljac, ρ=2700 [kg/m&#179]');return false"><span>Granit, kristalasti škriljac, ρ=2700 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2800.0,  920.0, 3.500,     65.0,'Granit, kristalasti škriljac, ρ=2800 [kg/m&#179]');return false"><span>Granit, kristalasti škriljac, ρ=2800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2600.0,  920.0, 2.300,     65.0,'Gusti krečnjak, dolomit, mermer, ρ=2600 [kg/m&#179]');return false"><span>Gusti krečnjak, dolomit, mermer, ρ=2600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2700.0,  920.0, 2.800,     65.0,'Gusti krečnjak, dolomit, mermer, ρ=2700 [kg/m&#179]');return false"><span>Gusti krečnjak, dolomit, mermer, ρ=2700 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2850.0,  920.0, 3.500,     65.0,'Gusti krečnjak, dolomit, mermer, ρ=2850 [kg/m&#179]');return false"><span>Gusti krečnjak, dolomit, mermer, ρ=2850 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2600.0,  920.0, 1.700,     50.0,'Peščar, amorfni krečnjak');return false"><span>Peščar, amorfni krečnjak</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1500.0,  840.0, 1.200,     15.0,'Pesak i sitni šljunak, ρ=1500 [kg/m&#179]');return false"><span>Pesak i sitni šljunak, ρ=1500 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  840.0, 1.300,     15.0,'Pesak i sitni šljunak, ρ=1600 [kg/m&#179]');return false"><span>Pesak i sitni šljunak, ρ=1600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1700.0,  840.0, 1.400,     15.0,'Pesak i sitni šljunak, ρ=1700 [kg/m&#179]');return false"><span>Pesak i sitni šljunak, ρ=1700 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1800.0,  840.0, 1.500,     15.0,'Pesak i sitni šljunak, ρ=1800 [kg/m&#179]');return false"><span>Pesak i sitni šljunak, ρ=1800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0,  840.0, 1.600,     15.0,'Pesak i sitni šljunak, ρ=1900 [kg/m&#179]');return false"><span>Pesak i sitni šljunak, ρ=1900 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2000.0,  840.0, 1.700,     15.0,'Pesak i sitni šljunak, ρ=2000 [kg/m&#179]');return false"><span>Pesak i sitni šljunak, ρ=2000 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1500.0,  840.0, 1.500,     50.0,'Zaraslo zemljište, humus, ρ=1500 [kg/m&#179]');return false"><span>Zaraslo zemljište, humus, ρ=1500 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  840.0, 1.700,     50.0,'Zaraslo zemljište, humus, ρ=1600 [kg/m&#179]');return false"><span>Zaraslo zemljište, humus, ρ=1600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1700.0,  840.0, 1.900,     50.0,'Zaraslo zemljište, humus, ρ=1700 [kg/m&#179]');return false"><span>Zaraslo zemljište, humus, ρ=1700 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1800.0,  840.0, 2.100,     50.0,'Zaraslo zemljište, humus, ρ=1800 [kg/m&#179]');return false"><span>Zaraslo zemljište, humus, ρ=1800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0,  840.0, 2.300,     50.0,'Zaraslo zemljište, humus, ρ=1900 [kg/m&#179]');return false"><span>Zaraslo zemljište, humus, ρ=1900 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2000.0,  840.0, 2.600,     50.0,'Zaraslo zemljište, humus, ρ=2000 [kg/m&#179]');return false"><span>Zaraslo zemljište, humus, ρ=2000 [kg/m&#179]</span></div>
+                </li>
+                
+                </ul> 
+                </ul>
+               <ul>
+                    <li><span class="btn btn-warning"><i class="glyphicon glyphicon-plus-sign"></i> Materijalni ispuna i nasipni materijali</span>
+                <ul>
+
+                <li>
+                    <div onclick="postaviSloj( 1800.0,  840.0, 0.580,      1.4,'Pesak, suvi');return false"><span>Pesak, suvi</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1700.0,  840.0, 0.810,      1.5,'Šljunak, suvi');return false"><span>Šljunak, suvi</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  800.0,  840.0, 0.410,      1.3,'Usitnjena opeka');return false"><span>Usitnjena opeka</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   50.0,  840.0, 0.040,      1.1,'Usitnjena pluta');return false"><span>Usitnjena pluta</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  100.0,  840.0, 0.050,      1.3,'Perlit nasut');return false"><span>Perlit nasut</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  400.0,  840.0, 0.220,      1.3,'Keramzit, nasut');return false"><span>Keramzit, nasut</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  250.0, 2090.0, 0.090,      1.2,'Piljevina');return false"><span>Piljevina</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1700.0,  840.0, 2.100,      0.5,'Nasuta zemlja, vlažna');return false"><span>Nasuta zemlja, vlažna</span></div>
+                </li>
+                </ul> 
+                </ul>
+               <ul>
+                    <li><span class="btn btn-warning"><i class="glyphicon glyphicon-plus-sign"></i> Betoni</span>
+                <ul>
+                <li>
+                    <div onclick="postaviSloj( 2500.0,  960.0, 2.330,     90.0,'Betoni sa kamenim agregatima, ρ=2500 [kg/m&#179]');return false"><span>Betoni sa kamenim agregatima, ρ=2500 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2400.0,  960.0, 2.040,     60.0,'Betoni sa kamenim agregatima, ρ=2400 [kg/m&#179]');return false"><span>Betoni sa kamenim agregatima, ρ=2400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2200.0,  960.0, 1.510,     30.0,'Betoni sa kamenim agregatima, ρ=2200 [kg/m&#179]');return false"><span>Betoni sa kamenim agregatima, ρ=2200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2000.0,  960.0, 1.160,     22.0,'Betoni sa kamenim agregatima, ρ=2000 [kg/m&#179]');return false"><span>Betoni sa kamenim agregatima, ρ=2000 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1800.0,  960.0, 0.930,     15.0,'Betoni sa kamenim agregatima, ρ=1800 [kg/m&#179]');return false"><span>Betoni sa kamenim agregatima, ρ=1800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0, 1000.0, 0.580,     10.0,'Keramzit beton, ρ=1400 [kg/m&#179]');return false"><span>Keramzit beton, ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0, 1000.0, 0.470,      6.0,'Keramzit beton, ρ=1200 [kg/m&#179]');return false"><span>Keramzit beton, ρ=1200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0, 1000.0, 0.380,      4.0,'Keramzit beton, ρ=1000 [kg/m&#179]');return false"><span>Keramzit beton, ρ=1000 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  800.0, 1000.0, 0.290,      3.0,'Keramzit beton, ρ=800 [kg/m&#179]');return false"><span>Keramzit beton, ρ=800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  800.0, 1050.0, 0.290,      7.0,'Pareni, gas betoni, ρ=800 [kg/m&#179]');return false"><span>Pareni, gas betoni, ρ=800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  600.0, 1050.0, 0.230,      5.0,'Pareni, gas betoni, ρ=600 [kg/m&#179]');return false"><span>Pareni, gas betoni, ρ=600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  500.0, 1050.0, 0.190,      3.0,'Pareni, gas betoni, ρ=500 [kg/m&#179]');return false"><span>Pareni, gas betoni, ρ=500 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  400.0, 1050.0, 0.140,      2.0,'Pareni, gas betoni, ρ=400 [kg/m&#179]');return false"><span>Pareni, gas betoni, ρ=400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  920.0, 0.760,      6.0,'Betoni od usitnjene opeke, ρ=1600 [kg/m&#179]');return false"><span>Betoni od usitnjene opeke, ρ=1600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  920.0, 0.580,      4.0,'Betoni od usitnjene opeke, ρ=1400 [kg/m&#179]');return false"><span>Betoni od usitnjene opeke, ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  920.0, 0.470,      3.0,'Betoni od usitnjene opeke, ρ=1200 [kg/m&#179]');return false"><span>Betoni od usitnjene opeke, ρ=1200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  960.0, 0.760,      5.0,'Šljaka beton, ρ=1600 [kg/m&#179]');return false"><span>Šljaka beton, ρ=1600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  960.0, 0.580,      4.0,'Šljaka beton, ρ=1400 [kg/m&#179]');return false"><span>Šljaka beton, ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  960.0, 0.470,      3.0,'Šljaka beton, ρ=1200 [kg/m&#179]');return false"><span>Šljaka beton, ρ=1200 [kg/m&#179]</span></div>
+                </li>
+                </ul> 
+                </ul>
+               <ul>
+                    <li><span class="btn btn-warning"><i class="glyphicon glyphicon-plus-sign"></i> Materijali za oblaganje</span>
+                <ul>
+                <li>
+                    <div onclick="postaviSloj(  900.0,  840.0, 0.210,     12.0,'Gips-kartonske ploče do 15mm');return false"><span>Gips-kartonske ploče do 15mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  900.0,  840.0, 0.230,      8.0,'Gips-kartonske ploče do 18mm');return false"><span>Gips-kartonske ploče do 18mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  840.0, 0.700,     12.0,'Pune gipsane ploče, ρ=1400 [kg/m&#179]');return false"><span>Pune gipsane ploče, ρ=1400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  840.0, 0.580,      8.5,'Pune gipsane ploče, ρ=1200 [kg/m&#179]');return false"><span>Pune gipsane ploče, ρ=1200 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0,  840.0, 0.470,      6.0,'Pune gipsane ploče, ρ=1000 [kg/m&#179]');return false"><span>Pune gipsane ploče, ρ=1000 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  800.0,  840.0, 0.350,      4.0,'Gipsane ploče sa punjenjem, otvorima ili porozne, ρ=800 [kg/m&#179]');return false"><span>Gipsane ploče sa punjenjem, otvorima ili porozne, ρ=800 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  600.0,  840.0, 0.290,      3.0,'Gipsane ploče sa punjenjem, otvorima ili porozne, ρ=600 [kg/m&#179]');return false"><span>Gipsane ploče sa punjenjem, otvorima ili porozne, ρ=600 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0,  920.0, 1.050,    100.0,'Klinker pločice');return false"><span>Klinker pločice</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1800.0,  920.0, 0.790,     20.0,'Pločice od opeke');return false"><span>Pločice od opeke</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1800.0,  920.0, 0.920,    300.0,'Fasadne ploče, glazirane');return false"><span>Fasadne ploče, glazirane</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1700.0,  920.0, 0.870,    200.0,'Keramičke pločice, zidne glazirane');return false"><span>Keramičke pločice, zidne glazirane</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2300.0,  920.0, 1.280,    200.0,'Keramičke pločice, podne glazirane');return false"><span>Keramičke pločice, podne glazirane</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0,  880.0, 0.990,    140.0,'Keramički mozaik-50mm x 50mm- 16% fuge');return false"><span>Keramički mozaik-50mm x 50mm- 16% fuge</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0,  880.0, 0.990,    100.0,'Keramički mozaik-20mm x 20mm- 21% fuge');return false"><span>Keramički mozaik-20mm x 20mm- 21% fuge</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0,  880.0, 0.990,     90.0,'Keramički mozaik-12mm x 12mm- 26% fuge');return false"><span>Keramički mozaik-12mm x 12mm- 26% fuge</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2300.0,  840.0, 0.700,    150.0,'Stakleni mozaik- 20mm x 20mm-20% šupljina');return false"><span>Stakleni mozaik- 20mm x 20mm-20% šupljina</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0, 1880.0, 0.190,    500.0,'Linoleum');return false"><span>Linoleum</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0, 1470.0, 0.160,  10000.0,'Guma');return false"><span>Guma</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2500.0,  960.0, 2.330,     90.0,'Unapred izrađeni betonski elementi, ρ=2500 [kg/m&#179]');return false"><span>Unapred izrađeni betonski elementi, ρ=2500 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2400.0,  960.0, 2.040,     70.0,'Unapred izrađeni betonski elementi, ρ=2400 [kg/m&#179]');return false"><span>Unapred izrađeni betonski elementi, ρ=2400 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  920.0, 0.470,     10.0,'Laki betonski elementi');return false"><span>Laki betonski elementi</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2650.0,  880.0, 2.330,     65.0,'Ploče od gustog krečnjaka, dolomita i mermera, ρ=2650 [kg/m&#179]');return false"><span>Ploče od gustog krečnjaka, dolomita i mermera, ρ=2650 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2750.0,  880.0, 2.330,     65.0,'Ploče od gustog krečnjaka, dolomita i mermera, ρ=2750 [kg/m&#179]');return false"><span>Ploče od gustog krečnjaka, dolomita i mermera, ρ=2750 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2850.0,  880.0, 2.330,     65.0,'Ploče od gustog krečnjaka, dolomita i mermera, ρ=2850 [kg/m&#179]');return false"><span>Ploče od gustog krečnjaka, dolomita i mermera, ρ=2850 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2600.0,  880.0, 2.330,     50.0,'Ploče od peščara');return false"><span>Ploče od peščara</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2500.0,  840.0, 0.810,  10000.0,'Prozorsko staklo');return false"><span>Prozorsko staklo</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2600.0,  840.0, 0.440, 100000.0,'Armirano staklo');return false"><span>Armirano staklo</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1100.0,  840.0, 0.440,   4000.0,'Šuplji stakleni blokovi');return false"><span>Šuplji stakleni blokovi</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  750.0, 2300.0, 0.210,     50.0,'Drvo-hrast');return false"><span>Drvo-hrast</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  550.0, 2090.0, 0.140,     70.0,'drvo-smreka, bor');return false"><span>drvo-smreka, bor</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  600.0, 2090.0, 0.120,     60.0,'Vodootporne panelne ploče');return false"><span>Vodootporne panelne ploče</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  620.0, 2090.0, 0.130,     60.0,'Vodootporne panelne ploče-teške, za spoljnje oblaganje');return false"><span>Vodootporne panelne ploče-teške, za spoljnje oblaganje</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  400.0, 2090.0, 0.080,     30.0,'Vodootporne panelne ploče-lakše, za unutrašnje oblaganje');return false"><span>Vodootporne panelne ploče-lakše, za unutrašnje oblaganje</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  660.0, 2090.0, 0.140,    100.0,'Vodootporne šper ploče');return false"><span>Vodootporne šper ploče</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  550.0, 2090.0, 0.140,     60.0,'Vodootporne šper ploče-za unutrašnje oblaganje');return false"><span>Vodootporne šper ploče-za unutrašnje oblaganje</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0, 1880.0, 0.120,     17.0,'Iverne ploče-tvrde');return false"><span>Iverne ploče-tvrde</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  400.0, 2090.0, 0.058,      6.0,'Iverne ploče-meke');return false"><span>Iverne ploče-meke</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  300.0, 2090.0, 0.052,      3.0,'Iverne ploče-meke 1');return false"><span>Iverne ploče-meke 1</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  200.0, 2090.0, 0.047,      2.0,'Iverne ploče-meke 2');return false"><span>Iverne ploče-meke 2</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  600.0, 2090.0, 0.099,     60.0,'Iverne ploče, presovane');return false"><span>Iverne ploče, presovane</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  550.0, 2010.0, 0.140,     11.0,'Ploče od drvene vune (izolit, heraklit i sl)-debljine do 15mm');return false"><span>Ploče od drvene vune (izolit, heraklit i sl)-debljine do 15mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  500.0, 1670.0, 0.099,      8.0,'Ploče od drvene vune (izolit, heraklit i sl)-debljine do 25mm');return false"><span>Ploče od drvene vune (izolit, heraklit i sl)-debljine do 25mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  450.0, 1670.0, 0.093,      6.0,'Ploče od drvene vune (izolit, heraklit i sl)-debljine do 35mm');return false"><span>Ploče od drvene vune (izolit, heraklit i sl)-debljine do 35mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  400.0, 1670.0, 0.081,      5.0,'Ploče od drvene vune (izolit, heraklit i sl)-debljine do 50mm');return false"><span>Ploče od drvene vune (izolit, heraklit i sl)-debljine do 50mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  600.0, 1340.0, 0.150,      5.0,'Papirnate tapete');return false"><span>Papirnate tapete</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  700.0, 1340.0, 0.150,     10.0,'Papirnate tapete-perive');return false"><span>Papirnate tapete-perive</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  700.0, 1250.0, 0.200,   3000.0,'Papirnate tapete-plastične');return false"><span>Papirnate tapete-plastične</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1100.0, 1050.0, 0.170,   1200.0,'Bitumen');return false"><span>Bitumen</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2100.0, 1050.0, 0.700,   2500.0,'Asfalt');return false"><span>Asfalt</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0, 1050.0, 0.700,   2000.0,'Asfalt, 20mm');return false"><span>Asfalt, 20mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1100.0, 1460.0, 0.190,   2000.0,'Bitumenska lepenka');return false"><span>Bitumenska lepenka</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  960.0, 0.230,  10000.0,'PVC, homogeni');return false"><span>PVC, homogeni</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  800.0,  960.0, 0.120,   3000.0,'PVC, na filcu');return false"><span>PVC, na filcu</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  250.0, 1230.0, 0.070,      1.5,'Podne obloge-tepisi-napeti tafting');return false"><span>Podne obloge-tepisi-napeti tafting</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  270.0,12300.0, 0.081,     10.0,'Podne obloge-tepisi-lepljivi tafting');return false"><span>Podne obloge-tepisi-lepljivi tafting</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  300.0, 1460.0, 0.090,     10.0,'Podne obloge-tepisi-iglasti fil lepljen');return false"><span>Podne obloge-tepisi-iglasti fil lepljen</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  520.0, 1670.0, 0.140,     15.0,'Daska za pod');return false"><span>Daska za pod</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  700.0, 1670.0, 0.210,     15.0,'Parket');return false"><span>Parket</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  900.0, 1670.0, 0.190,     70.0,'Tvrde ploče od drvnih vlakana');return false"><span>Tvrde ploče od drvnih vlakana</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0, 1250.0, 0.190,  80000.0,'Polietilenska folija');return false"><span>Polietilenska folija</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  960.0, 0.190,  42000.0,'PVC folija, meka');return false"><span>PVC folija, meka</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  900.0, 1460.0, 0.190, 100000.0,'Bitumenska traka sa uloškom aluminijumske folije debljine 0.1 mm');return false"><span>Bitumenska traka sa uloškom aluminijumske folije debljine 0.1 mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  950.0, 1460.0, 0.190, 150000.0,'Bitumenska traka sa uloškom aluminijumske folije debljine 0.2 mm');return false"><span>Bitumenska traka sa uloškom aluminijumske folije debljine 0.2 mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1000.0, 1460.0, 0.190, 140000.0,'Bitumenska traka, varena, debljine 5 mm, sa aluminijumskom folijom 0.2mm');return false"><span>Bitumenska traka, varena, debljine 5 mm, sa aluminijumskom folijom 0.2mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1100.0, 1460.0, 0.170,  10000.0,'Krovna lepenka');return false"><span>Krovna lepenka</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1100.0, 1460.0, 0.170,  10000.0,'Višeslojni bitumenski premaz armiran u jednom sloju-10mm');return false"><span>Višeslojni bitumenski premaz armiran u jednom sloju-10mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1100.0, 1460.0, 0.190,  14000.0,'Višeslojna bitumenska hidroizolacija debljine 13-16mm');return false"><span>Višeslojna bitumenska hidroizolacija debljine 13-16mm</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0, 1460.0, 0.190,  14000.0,'Višeslojna bitumenska hidroizolacija na perforiranoj lepenki');return false"><span>Višeslojna bitumenska hidroizolacija na perforiranoj lepenki</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0,  960.0, 0.190,  20000.0,'PVC krovne trake, meke');return false"><span>PVC krovne trake, meke</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1600.0,  960.0, 0.260, 300000.0,'PIB (poliizobutil) trake');return false"><span>PIB (poli-izobutil) trake</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1300.0, 1000.0, 0.230, 100000.0,'CP ( hloropren-kaučuk) trake');return false"><span>CP (hloropren-kaučuk) trake</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1500.0, 1000.0, 0.300,  80000.0,'CSM (hlorosulfidni polietilen) traka');return false"><span>CSM (hlorosulfidni polietilen) traka</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1200.0, 1040.0, 0.300, 100000.0,'EPDM (etilen-propilen-kaučuk) trake');return false"><span>EPDM (etilen-propilen-kaučuk) trake</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1900.0,  880.0, 0.990,     40.0,'Crep');return false"><span>Crep</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2800.0,  820.0, 2.900,    120.0,'Ploče od škriljaca');return false"><span>Ploče od škriljaca</span></div>
+                </li>
+                </ul> 
+                </ul>
+               <ul>
+                    <li><span class="btn btn-warning"><i class="glyphicon glyphicon-plus-sign"></i> Metali</span>
+                <ul>
+                <li>
+                    <div onclick="postaviSloj( 7800.0,  460.0,53.500, 500000.0,'Čelik');return false"><span>Čelik</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 7200.0,  500.0,46.500, 600000.0,'Liveni čelik');return false"><span>Liveni čelik</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2700.0,  940.0, 203.000, 600000.0,'Aluminijumska folija 0.1, μ=600000');return false"><span>Aluminijumska folija 0.1, μ=600000</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2700.0,  940.0,203.000, 700000.0,'Aluminijumska folija 0.1, μ=700000');return false"><span>Aluminijumska folija 0.1, μ=700000</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 2700.0,  940.0,203.000, 800000.0,'Aluminijumska folija 0.2');return false"><span>Aluminijumska folija 0.2</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 9000.0,  380.0, 380.000, 700000.0,'Bakarna folija 0.1');return false"><span>Bakarna folija 0.1</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 9000.0,  380.0, 380.000, 800000.0,'Bakarna folija 0.15');return false"><span>Bakarna folija 0.15</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(11500.0,  130.0,35.000, 600000.0,'Olovo');return false"><span>Olovo</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 7100.0,  390.0,******, 500000.0,'Cink');return false"><span>Cink</span></div>
+                </li>
+            	    </ul> 
+                </ul>
+               <ul>
+                    <li><span class="btn btn-warning"><i class="glyphicon glyphicon-plus-sign"></i> Toplotno izolacioni materijali</span>
+                <ul>
+                <li>
+                    <div onclick="postaviSloj(   14.0,  840.0, 0.038,      1.0,'Staklena vuna, ρ=14 [kg/m&#179]');return false"><span>Staklena vuna, ρ=14 [kg/m&#179]</span></div>                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   23.0,  840.0, 0.034,      1.0,'Staklena vuna, ρ=23 [kg/m&#179]');return false"><span>Staklena vuna, ρ=23 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   30.0,  840.0, 0.032,      1.0,'Staklena vuna, ρ=30 [kg/m&#179]');return false"><span>Staklena vuna, ρ=30 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   60.0,  840.0, 0.032,      1.0,'Staklena vuna, ρ=60 [kg/m&#179]');return false"><span>Staklena vuna, ρ=60 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   80.0,  840.0, 0.034,      1.0,'Staklena vuna, ρ=80[kg/m&#179]');return false"><span>Staklena vuna, ρ=80[kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   30.0,  840.0, 0.038,      1.0,'Kamena vuna, ρ=30 [kg/m&#179]');return false"><span>Kamena vuna, ρ=30 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   80.0,  840.0, 0.034,      1.0,'Kamena vuna, ρ=80 [kg/m&#179]');return false"><span>Kamena vuna, ρ=80 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  100.0,  840.0, 0.033,      1.0,'Kamena vuna, ρ=100 [kg/m&#179]');return false"><span>Kamena vuna, ρ=100 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  160.0,  840.0, 0.037,      1.0,'Kamena vuna, ρ=160 [kg/m&#179]');return false"><span>Kamena vuna, ρ=160 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  180.0,  840.0, 0.039,      1.0,'Kamena vuna, ρ=180 [kg/m&#179]');return false"><span>Kamena vuna, ρ=180 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  145.0,  840.0, 0.056,  10000.0,'Staklena pena');return false"><span>Staklena pena</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  120.0, 1670.0, 0.041,     10.0,'Pluta, ekspandirana, impregnirana');return false"><span>Pluta, ekspandirana, impregnirana</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  160.0, 1670.0, 0.044,     22.0,'Pluta, ekspandirana, impregnirana 1');return false"><span>Pluta, ekspandirana, impregnirana 1</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  800.0, 1260.0, 0.046,      2.0,'Ploče od prošivene trske');return false"><span>Ploče od prošivene trske</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  350.0, 1470.0, 0.098,      3.0,'Ploče od presovane slame (stramit)');return false"><span>Ploče od presovane slame (stramit)</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  550.0, 1465.0, 0.140,      5.0,'Beton sa dodatkom piljevine');return false"><span>Beton sa dodatkom piljevine</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  800.0, 1465.0, 0.240,     10.0,'Beton sa dodatkom piljevine 1');return false"><span>Beton sa dodatkom piljevine 1</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0, 1590.0, 0.190,  50000.0,'Sintetičke ploče od višeslojnog poliestera');return false"><span>Sintetičke ploče od višeslojnog poliestera</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1500.0, 1090.0, 0.230,  50000.0,'Sintetičke ploče od višeslojnog poliestera 1');return false"><span>Sintetičke ploče od višeslojnog poliestera 1</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1180.0, 1000.0, 0.190,   8000.0,'Ploče od akrilne smole');return false"><span>Ploče od akrilne smole</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj( 1400.0,  960.0, 0.210,  16000.0,'PVMD i PVC ploče');return false"><span>PVMD i PVC ploče</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   15.0, 1260.0, 0.041,     25.0,'Polietilenske ploče u blokovima, ρ=15 [kg/m&#179]');return false"><span>Polietilenske ploče u blokovima, ρ=15 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   20.0, 1260.0, 0.041,     35.0,'Polietilenske ploče u blokovima, ρ=20 [kg/m&#179]');return false"><span>Polietilenske ploče u blokovima, ρ=20 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   25.0, 1260.0, 0.041,     40.0,'Polietilenske ploče u blokovima, ρ=25 [kg/m&#179]');return false"><span>Polietilenske ploče u blokovima, ρ=25 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   30.0, 1260.0, 0.041,     45.0,'Polietilenske ploče u blokovima, ρ=30 [kg/m&#179]');return false"><span>Polietilenske ploče u blokovima, ρ=30 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   20.0, 1260.0, 0.041,     40.0,'Polistiren, izgrađen u kalupima, ρ=20 [kg/m&#179]');return false"><span>Polistiren, izgrađen u kalupima, ρ=20 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   25.0, 1260.0, 0.041,     50.0,'Polistiren, izgrađen u kalupima, ρ=25 [kg/m&#179]');return false"><span>Polistiren, izgrađen u kalupima, ρ=25 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   30.0, 1260.0, 0.041,     60.0,'Polistiren, izgrađen u kalupima, ρ=30 [kg/m&#179]');return false"><span>Polistiren, izgrađen u kalupima, ρ=30 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   40.0, 1260.0, 0.041,     35.0,'Fenolne ploče, rezane iz blokova, ρ=40 [kg/m&#179]');return false"><span>Fenolne ploče, rezane iz blokova, ρ=40 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   60.0, 1260.0, 0.041,     40.0,'Fenolne ploče, rezane iz blokova, ρ=60 [kg/m&#179]');return false"><span>Fenolne ploče, rezane iz blokova, ρ=60 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   30.0, 1380.0, 0.035,     40.0,'Poliuretanske ploče, izrezane iz blokova, ρ=30 [kg/m&#179]');return false"><span>Poliuretanske ploče, izrezane iz blokova, ρ=30 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   40.0, 1380.0, 0.035,     50.0,'Poliuretanske ploče, izrezane iz blokova, ρ=40 [kg/m&#179]');return false"><span>Poliuretanske ploče, izrezane iz blokova, ρ=40 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   50.0, 1260.0, 0.041,    200.0,'PVC ploče');return false"><span>PVC ploče</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   15.0, 1260.0, 0.040,      3.0,'Urea ploče');return false"><span>Urea ploče</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   33.0, 1500.0, 0.035,     50.0,'Ekstrudirani polistiren (HPS) do debljine 80mm , sa glatkom površinom');return false"><span>Ekstrudirani polistiren (HPS) do debljine 80mm , sa glatkom površinom</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   33.0, 1500.0, 0.035,    120.0,'Ekstrudirani polistiren (HPS) do debljine 80mm , sa brušenom površinom');return false"><span>Ekstrudirani polistiren (HPS) do debljine 80mm , sa brušenom površinom</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   33.0, 1500.0, 0.038,     50.0,'Ekstrudirani polistiren (HPS) iznad debljine 80mm , sa glatkom površinom');return false"><span>Ekstrudirani polistiren (HPS) iznad debljine 80mm , sa glatkom površinom</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   33.0, 1500.0, 0.038,    120.0,'Ekstrudirani polistiren (HPS) iznad debljine 80mm , sa brušenom površinom');return false"><span>Ekstrudirani polistiren (HPS) iznad debljine 80mm , sa brušenom površinom</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   20.0,  900.0, 0.040,      1.0,'Vuna ovce');return false"><span>Vuna ovce</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  100.0, 1600.0, 0.045,      1.0,'Kokosova vlakna');return false"><span>Kokosova vlakna</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  190.0, 2000.0, 0.045,     10.0,'Vlaknaste drvene pliče');return false"><span>Vlaknaste drvene ploče</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  600.0,  920.0, 0.190,      6.0,'Toplotnoizolacioni malter');return false"><span>Toplotnoizolacioni malter</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   85.0, 1800.0, 0.040,      1.0,'Celuloza vlakna');return false"><span>Celuloza vlakna</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   20.0,  840.0, 0.040,      1.0,'Pamuk');return false"><span>Pamuk</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(  150.0, 1000.0, 0.040,      5.0,'Perlitne ploče');return false"><span>Perlitne ploče</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   15.0, 1500.0, 0.025,     30.0,'Poliuretanska pena,ρ=15 [kg/m&#179]');return false"><span>Poliuretanska pena,ρ=15 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   80.0, 1500.0, 0.040,    100.0,'Poliuretanska pena,ρ=80 [kg/m&#179]');return false"><span>Poliuretanska pena,ρ=80 [kg/m&#179]</span></div>
+                </li>
+
+                <li>
+                    <div onclick="postaviSloj(   90.0, 1000.0, 0.055,      3.0,'Perlitni nasip');return false"><span>Perlitni nasip</span></div>
+                </li>
+                </ul>
+                </div>
+
+           <!-- Forma za karakeristike materijala i debljinu -->
+			<div class="form-group">
+      			<label for="title" class="col-lg-2 control-label">Naziv sloja</label>
+      			<div class="col-lg-6">
+				<input type="text" id="naziv" required class="form-control" />
+				</div>
+
+		        </div>
+
+			<div class="form-group has-warning has-feedback">
+      			<label for="title" title="Debljina" class="col-lg-2 control-label">d [m]</label>
+                <div class="col-lg-2">
+    				<input type="text" id="debljina" name="debljina" required class="form-control" onchange="zameniVrednost('debljina','debljinaRange')"/>
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+				</div>
+		    </div>
+
+			<div class="form-group">
+
+      			<label for="title" title="Gustina" class="col-lg-2 control-label">ρ [kg/m&#179]</label>
+      			<div class="col-lg-2">
+				<input type="text" title="Gustina" id="rho" required class="form-control" />
+				</div>
+
+		        </div>
+			<div class="form-group">
+
+			<label for="title" title="Specifična toplota" class="col-lg-2 control-label">c [J/(kg*K)]</label>
+      			<div class="col-lg-2">
+				<input type="text" title="Specifična toplota" id="c" required class="form-control" />
+				</div>
+
+		        </div>
+			<div class="form-group">
+
+			<label for="title" title="Toplotna provodljivost" class="col-lg-2 control-label">λ [W/(m*K)]</label>
+      			<div class="col-lg-2">
+				<input type="text" title="Toplotna provodljivost" id="lambda" required class="form-control" />
+				</div>	
+
+		        </div>
+			<div class="form-group">
+
+			<label for="title" title="Relativni koef. difuzije vodene pare" class="col-lg-2 control-label">μ [-]</label> 
+      			<div class="col-lg-2">
+				<input type="text" title="Relativni koef. difuzije vodene pare" id="mi" required class="form-control" />
+				</div>	
+			</div>			
+			
+			<div class="form-group">
+				<div class="col-lg-offset-5 col-lg-10">
+					<button id="sacuvajSlojButton" class="btn btn-success" onclick="return IsEmpty();">Sačuvaj sloj</button>
+                    <button id="odustaniSlojButton" class="btn btn-default">Odustani</button>
+				</div>
+			</div>
+
+    </form>
+	</div>
+		
+    </div> <!-- div container-->
+
+    <!--script src="js/jquery-2.0.0.min.js"></script-->
+    <script src="js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+    <!-- plotovi
+    <link href="nv.d3.min.css" rel="stylesheet">
+    <script src="nv.d3.min.js"></script>
+    plotovi-->
+    </body>
+</html>

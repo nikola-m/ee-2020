@@ -348,8 +348,42 @@ function add_data_element_to_zgrada(dataName, dataValue) {
          
         request.onerror = function(event) {
                 console.log("Unable to add data to your database! ");       
-        };
-         
+        };        
 }
 
 
+/*
+
+Pravljenje niza objekata i i priprema podataka za D3 plotovanje
+
+var journal = [];
+
+function addEntry(events, didITurnIntoASquirrel) {
+  journal.push({
+    events: events,
+    squirrel: didITurnIntoASquirrel
+  });
+}
+
+addEntry(["work", "touched tree", "pizza", "running",
+          "television"], false);
+addEntry(["work", "ice cream", "cauliflower", "lasagna",
+          "touched tree", "brushed teeth"], false);
+addEntry(["weekend", "cycling", "break", "peanuts",
+          "beer"], true);
+
+
+ili u mojoj interpretaciji:
+var data = [];
+
+function addEntry(xDatum, yDatum) {
+  data.push({
+    x: xDatum,
+    y: yDatum
+  });
+}
+
+addEntry(1.3, 4.5);
+addEntry(1.4, 4.6);
+
+*/

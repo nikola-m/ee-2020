@@ -53,7 +53,6 @@ $(document).ready(function() {
       prikaziSlojeve();
       $slojDetail.show();
       $("#izracunata-U-vrednost").html(vratiU()); //automatski preracunaj U-val
-      
   };
 
 		
@@ -318,6 +317,7 @@ $('#tipOmotaca-1').click(function(e){
     add_data_element_to_zgrada("resistanceSurfaceIntern", 0.13);
     add_data_element_to_zgrada("resistanceSurfaceExtern", 0.04);
 
+    $("#latex-output").html("Ubacen spoljasnji zid");
 });
 
 
@@ -351,7 +351,31 @@ function add_data_element_to_zgrada(dataName, dataValue) {
         };        
 }
 
+$("#napisiIzvestaj").on("click", function(e){
 
+  var content = String.raw`
+\newpage
+Енергетски разред за дати тип објекта  је одређен на основу табеле:
+\vspace{0.5cm}
+
+\begin{tabular}{ | l | l | l | l |}
+\hline
+  \textit{Зграде са више станова} &  & нове & постојеће \\ \hline
+  Енергетски разред & Q\textsubscript{H,nd,rel} & Q\textsubscript{H,nd}  & Q\textsubscript{H,nd}  \\ \hline
+   & [\%] & [kWh/(m\textsuperscript{2}a)] &  [kWh/(m\textsuperscript{2}a)] \\ \hline
+  А+ & \leq  15 & \leq  9 & \leq 10 \\ \hline
+  А & \leq  25 & \leq  15 & \leq 18 \\ \hline
+  B & \leq  50 & \leq  30 & \leq 35 \\ \hline
+  C & \leq 100 & \leq  60 & \leq 70 \\ \hline
+  D & \leq 150 & \leq  90 & \leq 105 \\ \hline
+  E & \leq 200 & \leq 120 & \leq 140 \\ \hline
+  F & \leq 250 & \leq 150 & \leq 175 \\ \hline
+  G & > 250    & >    150 &    > 175 \\ \hline
+\end{tabular}
+              `;
+
+  $("#latex-output").html(content);
+});
 /*
 
 Pravljenje niza objekata i i priprema podataka za D3 plotovanje
